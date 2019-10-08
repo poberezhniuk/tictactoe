@@ -1,0 +1,115 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+td {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border: solid lightgrey 3px;
+}
+
+td:hover {
+  cursor: pointer;
+  background-color: rgba(211, 211, 211, 0.425);
+}
+
+.filled:hover {
+  cursor: not-allowed;
+}
+
+.winner {
+  color: lightgreen;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.tic-tac-toe {
+}
+
+.cross {
+  position: relative;
+  top: -50%;
+}
+
+.cross:before,
+.cross:after {
+  position: absolute;
+  top: -6px;
+  left: 20px;
+  content: " ";
+  height: 59px;
+  width: 6px;
+  background-color: lightcoral;
+}
+
+.cross:before {
+  transform: rotate(45deg);
+}
+
+.cross:after {
+  transform: rotate(-45deg);
+}
+
+.circle {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  border: 6px solid lightblue;
+}
+
+.line-horizontal {
+  position: absolute;
+  top: calc(50% - 3px);
+  z-index: 33;
+  width: 146px;
+  height: 6px;
+  background-color: black;
+}
+
+.line-vertical {
+  position: absolute;
+  top: 1px;
+  left: calc(50% - 3px);
+  z-index: 33;
+  width: 6px;
+  height: 145px;
+  background-color: black;
+}
+
+.line-top-right {
+  position: absolute;
+  top: calc(-60%);
+  left: 150%;
+  z-index: 33;
+  width: 6px;
+  height: 203px;
+  transform: rotate(-45deg);
+  background-color: black;
+}
+
+.line-top-left {
+  position: absolute;
+  top: calc(-60%);
+  left: -60%;
+  z-index: 33;
+  width: 6px;
+  height: 203px;
+  transform: rotate(45deg);
+  background-color: black;
+}
+
+h2 {
+  color: lightslategrey;
+}

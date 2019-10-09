@@ -1,3 +1,5 @@
+"use strict";
+
 const DIRECTIONS_TYPES = {
   HORIZONTAL: "HORIZONTAL",
   VERTICAL: "VERTICAL",
@@ -5,14 +7,18 @@ const DIRECTIONS_TYPES = {
   DIAGONAL_TOP_RIGHT: "DIAGONAL_TOP_RIGHT"
 };
 
-let currentPlayerX = true;
-let player = document.getElementById("player");
-const squares = Array(16).fill(null);
+const playButton = document.getElementById("playButton");
 const cells = document.querySelectorAll("td");
+const player = document.getElementById("player");
+let table;
+let currentPlayerX = true;
 let isWinner = false;
 let winDirection = "";
+let isTableCreated = false;
 
-const move = function(id) {
+playButton.addEventListener("click", createTable);
+
+function move(rowIndex, columnIndex) {
   if (this.classList.contains("filled") || isWinner) {
     return;
   }
@@ -23,71 +29,78 @@ const move = function(id) {
   this.append(mark);
   this.classList.add("filled");
 
-  squares[id] = currentPlayerX;
+  table[rowIndex][columnIndex] = currentPlayerX;
+
   player.textContent = currentPlayerX ? "Player: X" : "Player: O";
   currentPlayerX = !currentPlayerX;
 
-  let winnerCell = checkWinningCombination(squares);
-
-  if (winnerCell >= 0) {
-    let line = document.createElement("div");
+  const result = checkWinningCombination(table);
+  console.log(result);
+  if (result) {
+    const [winningRowIndex, winningColumnIndex] = [...result];
+    const line = document.createElement("div");
     line.classList.add(setDirection(winDirection));
 
     player.textContent = !currentPlayerX ? "X - WINNER" : "O - WINNER";
     player.classList.add("winner");
     isWinner = !isWinner;
 
-    cells[winnerCell].append(line);
+    const rows = document.querySelectorAll("tr");
+    rows[winningRowIndex]
+      .querySelectorAll("td")
+      [winningColumnIndex].append(line);
   }
-};
-
-function checkWinningCombination(squares) {
-  return squares.findIndex((cell, index) => {
-    if (cell === null) {
-      return false;
-    }
-    return winningCombination(index);
-  });
 }
 
-function winningCombination(cell) {
-  // Gorizontal Winning combination
-  if (
-    squares[cell] === squares[cell + 4] &&
-    squares[cell] === squares[cell + 8]
-  ) {
-    winDirection = DIRECTIONS_TYPES.VERTICAL;
+function checkWinningCombination(table) {
+  for (let rowIndex = 0; rowIndex < table.length; rowIndex++) {
+    for (
+      let columnIndex = 0;
+      columnIndex < table[rowIndex].length;
+      columnIndex++
+    ) {
+      if (winningCombinations(table, rowIndex, columnIndex)) {
+        return [rowIndex, columnIndex];
+      }
+    }
+  }
+}
 
+function winningCombinations(table, rowIndex, columnIndex) {
+  if (table[rowIndex][columnIndex] === null) return false;
+  // HORIZONTAL WIN
+  if (
+    //
+    table[rowIndex][columnIndex] === table[rowIndex][columnIndex + 1] &&
+    table[rowIndex][columnIndex] === table[rowIndex][columnIndex + 2]
+  ) {
+    winDirection = DIRECTIONS_TYPES.HORIZONTAL;
     return true;
   }
-  // Diagonale Winning combinations
+  // VERTICAL WIN
   if (
-    squares[cell] === squares[cell + 5] &&
-    squares[cell] === squares[cell + 10]
+    table[rowIndex][columnIndex] === table[rowIndex + 1][columnIndex] &&
+    table[rowIndex][columnIndex] === table[rowIndex + 2][columnIndex]
+  ) {
+    winDirection = DIRECTIONS_TYPES.VERTICAL;
+    return true;
+  }
+  // DIAGONAL TOP RIGHT WIN
+  if (
+    table[rowIndex][columnIndex] === table[rowIndex + 1][columnIndex + 1] &&
+    table[rowIndex][columnIndex] === table[rowIndex + 2][columnIndex + 2]
   ) {
     winDirection = DIRECTIONS_TYPES.DIAGONAL_TOP_RIGHT;
     return true;
   }
-
+  // DIAGONAL TOP LEFT WIN
   if (
-    squares[cell] === squares[cell + 3] &&
-    squares[cell] === squares[cell + 6]
+    table[rowIndex][columnIndex] === table[rowIndex + 1][columnIndex - 1] &&
+    table[rowIndex][columnIndex] === table[rowIndex + 2][columnIndex - 2]
   ) {
     winDirection = DIRECTIONS_TYPES.DIAGONAL_TOP_LEFT;
     return true;
   }
-  // Vertical Winning combination
-  if (
-    squares[cell] === squares[cell + 1] &&
-    squares[cell] === squares[cell + 2]
-  ) {
-    // Next row verify
-    if (cell + 2 > Math.ceil((cell + 1) / 4) * 4) return;
-
-    winDirection = DIRECTIONS_TYPES.HORIZONTAL;
-    return true;
-  }
-
   return false;
 }
 
@@ -106,7 +119,58 @@ function setDirection(directionType) {
   }
 }
 
-// Attach click event for cells
-cells.forEach((cell, index) =>
-  cell.addEventListener("click", move.bind(cell, index))
-);
+function createTable(event) {
+  event.preventDefault();
+  // Get value from inputs, convert them to int
+  const rowsCount = +document.getElementById("rowsCount").value;
+  const columnsCount = +document.getElementById("columnsCount").value;
+  // Check min and max sizes
+  if (
+    rowsCount < 3 ||
+    rowsCount > 10 ||
+    (columnsCount < 3 || columnsCount > 10)
+  )
+    return;
+
+  // searching tbody for future elements insertion
+  const tbody = document.getElementById("tic-tac-toe").firstElementChild;
+
+  // Create and fill two dimention virtual array
+  table = new Array(rowsCount)
+    .fill(null)
+    .map(item => new Array(columnsCount).fill(null));
+  console.log(table);
+  // Inser table to HTML
+  if (isTableCreated) {
+    const newTbody = document.createElement("tbody");
+    newTbody.append(...[...drawTable(table)]);
+
+    tbody.replaceWith(newTbody);
+
+    isWinner = false;
+    currentPlayerX = true;
+    player.textContent = currentPlayerX ? "Player: X" : "Player: O";
+  } else {
+    tbody.append(...[...drawTable(table)]);
+    isTableCreated = true;
+  }
+}
+
+function drawTable(table) {
+  // Creates DOM tree based on virtual two-dimention array
+  return table.map((row, rowIndex) => {
+    const tableRow = document.createElement("tr");
+    const tableColumns = row.map((cell, columnIndex) => {
+      const tableColumn = document.createElement("td");
+      tableColumn.addEventListener(
+        "click",
+        move.bind(tableColumn, rowIndex, columnIndex)
+      );
+
+      return tableColumn;
+    });
+    // Insert cells in row
+    tableRow.append(...tableColumns);
+    return tableRow;
+  });
+}

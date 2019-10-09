@@ -1,45 +1,40 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <title>Parcel Sandbox</title>
+  <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="styles/style.css">
-    <script src="js/index.js"  defer></script>
-</head> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/style.css" />
+    <script src="js/index.js" defer></script>
+  </head>
 
-<body>
-    <h2 id="player">Player: <span>X</span></h1>
-        <table id="tic-tac-toe">
-            <tbody>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-
-  
-</body>
-
+  <body>
+    <h2>From 3 to 10</h2>
+    <form action="javascript:void(0); ">
+      <label for="rowsCount">rowsCount</label>
+      <input
+        type="number"
+        name="rowsCount"
+        id="rowsCount"
+        min="3"
+        max="10"
+        value="4"
+      />
+      <label for="columnCount">columnsCount</label>
+      <input
+        type="number"
+        name="columnsCount"
+        id="columnsCount"
+        min="3"
+        max="10"
+        value="4"
+      />
+      <button type="button" id="playButton">PLAY</button>
+    </form>
+    <h2 id="player">Player: <span>X</span></h2>
+    <table id="tic-tac-toe">
+      <tbody></tbody>
+    </table>
+  </body>
 </html>

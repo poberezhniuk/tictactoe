@@ -30,9 +30,8 @@ function move(rowIndex, columnIndex) {
   this.classList.add("filled");
 
   table[rowIndex][columnIndex] = currentPlayerX;
-
-  player.textContent = currentPlayerX ? "Player: X" : "Player: O";
   currentPlayerX = !currentPlayerX;
+  player.textContent = currentPlayerX ? "Player: X" : "Player: O";
 
   const result = checkWinningCombination(table);
   console.log(result);
@@ -149,6 +148,7 @@ function createTable(event) {
 
     isWinner = false;
     currentPlayerX = true;
+    player.classList.remove("winner");
     player.textContent = currentPlayerX ? "Player: X" : "Player: O";
   } else {
     tbody.append(...[...drawTable(table)]);

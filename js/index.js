@@ -1,5 +1,3 @@
-"use strict";
-
 const DIRECTIONS_TYPES = {
   HORIZONTAL: "HORIZONTAL",
   VERTICAL: "VERTICAL",
@@ -31,20 +29,20 @@ const move = function(id) {
 
   let winnerCell = checkWinningCombination(squares);
 
-  if (winnerCell > 0) {
+  if (winnerCell >= 0) {
     let line = document.createElement("div");
     line.classList.add(setDirection(winDirection));
 
     player.textContent = !currentPlayerX ? "X - WINNER" : "O - WINNER";
     player.classList.add("winner");
-    isWinner = true;
+    isWinner = !isWinner;
 
     cells[winnerCell].append(line);
   }
 };
 
-function checkWinningCombination(squaresArr) {
-  return squaresArr.findIndex((cell, index) => {
+function checkWinningCombination(squares) {
+  return squares.findIndex((cell, index) => {
     if (cell === null) {
       return false;
     }
@@ -52,17 +50,7 @@ function checkWinningCombination(squaresArr) {
   });
 }
 
-// Checkswinning combinations
 function winningCombination(cell) {
-  // Vertical Winning combination
-  if (
-    squares[cell] === squares[cell + 1] &&
-    squares[cell] === squares[cell + 2]
-  ) {
-    winDirection = DIRECTIONS_TYPES.HORIZONTAL;
-    return true;
-  }
-
   // Gorizontal Winning combination
   if (
     squares[cell] === squares[cell + 4] &&
@@ -72,8 +60,7 @@ function winningCombination(cell) {
 
     return true;
   }
-
-  // Diagonale top-right Winning combinations
+  // Diagonale Winning combinations
   if (
     squares[cell] === squares[cell + 5] &&
     squares[cell] === squares[cell + 10]
@@ -82,7 +69,6 @@ function winningCombination(cell) {
     return true;
   }
 
-  // Diagonale top-left Winning combinations
   if (
     squares[cell] === squares[cell + 3] &&
     squares[cell] === squares[cell + 6]
@@ -90,10 +76,21 @@ function winningCombination(cell) {
     winDirection = DIRECTIONS_TYPES.DIAGONAL_TOP_LEFT;
     return true;
   }
+  // Vertical Winning combination
+  if (
+    squares[cell] === squares[cell + 1] &&
+    squares[cell] === squares[cell + 2]
+  ) {
+    // Next row verify
+    if (cell + 2 > Math.ceil((cell + 1) / 4) * 4) return;
+
+    winDirection = DIRECTIONS_TYPES.HORIZONTAL;
+    return true;
+  }
 
   return false;
 }
-// set class for element
+
 function setDirection(directionType) {
   switch (directionType) {
     case DIRECTIONS_TYPES.HORIZONTAL:

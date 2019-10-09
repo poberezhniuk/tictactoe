@@ -26,8 +26,9 @@ const move = function(id) {
   this.classList.add("filled");
 
   squares[id] = currentPlayerX;
-  player.textContent = currentPlayerX ? "Player: X" : "Player: O";
   currentPlayerX = !currentPlayerX;
+  player.textContent = currentPlayerX ? "Player: X" : "Player: O";
+
 
   let winnerCell = checkWinningCombination(squares);
 
@@ -112,4 +113,3 @@ function setDirection(directionType) {
 cells.forEach((cell, index) =>
   cell.addEventListener("click", move.bind(cell, index))
 );
-

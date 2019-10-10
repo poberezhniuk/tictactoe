@@ -30,9 +30,8 @@ function move(rowIndex, columnIndex) {
   this.classList.add("filled");
 
   table[rowIndex][columnIndex] = currentPlayerX;
-
-  player.textContent = currentPlayerX ? "Player: X" : "Player: O";
   currentPlayerX = !currentPlayerX;
+  player.textContent = currentPlayerX ? "Player: X" : "Player: O";
 
   const result = checkWinningCombination(table);
   console.log(result);
@@ -121,6 +120,7 @@ function setDirection(directionType) {
 
 function createTable(event) {
   event.preventDefault();
+  player.textContent = "Player: X";
   // Get value from inputs, convert them to int
   const rowsCount = +document.getElementById("rowsCount").value;
   const columnsCount = +document.getElementById("columnsCount").value;
@@ -149,6 +149,7 @@ function createTable(event) {
 
     isWinner = false;
     currentPlayerX = true;
+    player.classList.remove("winner");
     player.textContent = currentPlayerX ? "Player: X" : "Player: O";
   } else {
     tbody.append(...[...drawTable(table)]);

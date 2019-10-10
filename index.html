@@ -9,10 +9,9 @@
     <script src="js/index.js" defer></script>
   </head>
 
-  <body>
-    <h2>From 3 to 10</h2>
-    <form action="javascript:void(0); ">
-      <label for="rowsCount">rowsCount</label>
+  <body>   
+    <form id="tableSizeForm" action="javascript:void(0);">
+      <span id="size">Size:</span>
       <input
         type="number"
         name="rowsCount"
@@ -21,7 +20,7 @@
         max="10"
         value="4"
       />
-      <label for="columnCount">columnsCount</label>
+      <div id="tableSizeForm_cross"></div>
       <input
         type="number"
         name="columnsCount"
@@ -32,7 +31,7 @@
       />
       <button type="button" id="playButton">PLAY</button>
     </form>
-    <h2 id="player">Player: <span>X</span></h2>
+    <h2 id="player"><span></span></h2>
     <table id="tic-tac-toe">
       <tbody></tbody>
     </table>

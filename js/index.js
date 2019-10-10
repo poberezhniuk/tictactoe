@@ -34,7 +34,7 @@ function move(rowIndex, columnIndex) {
   player.textContent = currentPlayerX ? "Player: X" : "Player: O";
 
   const result = checkWinningCombination(table);
-  console.log(result);
+
   if (result) {
     const [winningRowIndex, winningColumnIndex] = [...result];
     const line = document.createElement("div");
@@ -139,7 +139,7 @@ function createTable(event) {
   table = new Array(rowsCount)
     .fill(null)
     .map(item => new Array(columnsCount).fill(null));
-  console.log(table);
+
   // Inser table to HTML
   if (isTableCreated) {
     const newTbody = document.createElement("tbody");

@@ -9,6 +9,12 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: lightblue;
+}
+
+table {
+  background-color: white;
+  border-collapse: collapse;
 }
 
 td {
@@ -28,11 +34,7 @@ td:hover {
 }
 
 .winner {
-  color: lightgreen;
-}
-
-table {
-  border-collapse: collapse;
+  color: darkgreen;
 }
 
 .tic-tac-toe {
@@ -112,4 +114,62 @@ table {
 
 h2 {
   color: lightslategrey;
+}
+
+h2 {
+  line-height: 0;
+}
+
+#size {
+  color: lightcoral;
+  padding: 0.3rem 0.9rem;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+#tableSizeForm {
+  color: white;
+  font-size: 1.3rem;
+  display: flex;
+}
+
+#rowsCount,
+#columnsCount {
+  border: none;
+  padding: 0.3rem;
+  font-size: 1.1rem;
+}
+
+#playButton {
+  color: white;
+  border: none;
+  padding: 0.3rem;
+  font-size: 1.1rem;
+  background-color: lightcoral;
+  margin-left: 10px;
+}
+
+#tableSizeForm_cross {
+  position: relative;
+  height: 1rem;
+  width: 2rem;
+}
+
+#tableSizeForm_cross:before,
+#tableSizeForm_cross:after {
+  position: absolute;
+  content: " ";
+  height: 1rem;
+  width: 4px;
+  top: 9px;
+  left: calc(1rem - 2px);
+  background-color: lightcoral;
+}
+
+#tableSizeForm_cross:before {
+  transform: rotate(45deg);
+}
+
+#tableSizeForm_cross:after {
+  transform: rotate(-45deg);
 }

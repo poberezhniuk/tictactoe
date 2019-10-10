@@ -119,7 +119,6 @@ function setDirection(directionType) {
 }
 
 function createTable(event) {
-  event.preventDefault();
   player.textContent = "Player: X";
   // Get value from inputs, convert them to int
   const rowsCount = +document.getElementById("rowsCount").value;

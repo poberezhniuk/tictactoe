@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/style.css" />
+    <script src="js/index.js" defer></script>
+  </head>
+
+  <body>
+    <form id="tableSizeForm" action="javascript:void(0);">
+      <span id="size">Size:</span>
+      <input
+        type="number"
+        name="rowsCount"
+        id="rowsCount"
+        min="3"
+        max="10"
+        value="4"
+      />
+      <div id="tableSizeForm_cross"></div>
+      <input
+        type="number"
+        name="columnsCount"
+        id="columnsCount"
+        min="3"
+        max="10"
+        value="4"
+      />
+      <button type="submit" id="playButton">PLAY</button>
+    </form>
+    <h2 id="player"><span></span></h2>
+    <table id="tic-tac-toe">
+      <tbody></tbody>
+    </table>
+  </body>
+</html>
